@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomePageBloc>(
-          create: (context) => HomePageBloc(index: 0)..add(LoadTodos()),
+          create: (context) => HomePageBloc()..add(LoadTodos()),
         ),
       ],
       child: MaterialApp(
@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
         ),
         home: const MainPage(),
         routes: {
-          '/homePage':(context) => const HomePage(),
-          '/favoritePage':(context) => const FavoritePage(),
+          '/homePage': (context) => const HomePage(),
+          '/favoritePage': (context) => const FavoritePage(),
         },
       ),
     );

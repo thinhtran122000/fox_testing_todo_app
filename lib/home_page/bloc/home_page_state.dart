@@ -2,7 +2,7 @@ part of 'home_page_bloc.dart';
 
 abstract class HomePageState {}
 
-class HomeBlocInitial extends HomePageState {}
+class TodoInitial extends HomePageState {}
 
 class TodosLoading extends HomePageState {
   List<Todo> todos = [];
@@ -11,7 +11,6 @@ class TodosLoading extends HomePageState {
 
 class TodosLoaded extends HomePageState {
   final List<Todo> todos;
-  bool isFavorite;
-  TodosLoaded({required this.todos,required this.isFavorite});
+  TodosLoaded({required this.todos});
 }
 

@@ -4,11 +4,12 @@ abstract class HomePageEvent {}
 
 class LoadTodos extends HomePageEvent {
   final List<Todo> todos;
+
   LoadTodos({this.todos = const []});
 }
 
 class FavoriteTodo extends HomePageEvent {
-   bool isFavorite =false;
+  bool isFavorite = false;
   FavoriteTodo({required this.isFavorite});
 }
 

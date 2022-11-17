@@ -6,8 +6,8 @@ part 'home_page_event.dart';
 part 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  int index;
-  HomePageBloc({required this.index})
+
+  HomePageBloc()
       : super(
           TodosLoaded(
             todos: [
@@ -16,7 +16,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
               Todo(id: '3', title: 'Todo 3'),
               Todo(id: '4', title: 'Todo 4'),
             ],
-            isFavorite: false
           ),
         ) {
     on<LoadTodos>(_loadTodo);
@@ -28,7 +27,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     var currentState = state;
     if (currentState is TodosLoading) {
       List<Todo> newList = event.todos;
-      emit(TodosLoaded(todos: newList,isFavorite: false));
+      emit(TodosLoaded(
+        todos: newList,
+      ));
     }
   }
 
@@ -36,19 +37,16 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     var currentState = state;
     if (currentState is TodosLoaded) {
       List<Todo> newList = List.from(currentState.todos)..add(event.todo);
-      emit(TodosLoaded(todos: newList,isFavorite: false));
+      emit(TodosLoaded(
+        todos: newList,
+      ));
     }
   }
 
   FutureOr<void> _favoriteTodo(FavoriteTodo event, Emitter<HomePageState> emit) {
     var currentState = state;
     if (currentState is TodosLoaded) {
-     if(currentState.todos[index].isFavorite){
-      emit(TodosLoaded(todos: currentState.todos,isFavorite: event.isFavorite));
-     }else{
-      emit(TodosLoaded(todos: currentState.todos,isFavorite: !event.isFavorite));
-     }
-
+      emit(TodosLoaded(todos: currentState.todos));
     }
   }
 
