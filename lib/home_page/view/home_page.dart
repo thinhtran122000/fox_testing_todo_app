@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fox_testing_todo_app/home_page/bloc/home_page_bloc.dart';
+import 'package:fox_testing_todo_app/main_page/bloc/main_page_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,8 +19,12 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Home'),
       ),
       body: Center(
-        child: BlocBuilder<HomePageBloc, HomePageState>(
+        child: BlocConsumer<MainPageBloc, MainPageState>(
+          listener: (context, state) {},
           builder: (context, state) {
+            if (state is TodosLoading) {
+              return const CircularProgressIndicator();
+            }
             if (state is TodosLoaded) {
               return ListView.builder(
                 itemCount: state.todos.length,
@@ -28,20 +32,10 @@ class _HomePageState extends State<HomePage> {
                   title: Text(state.todos[index].title),
                   leading: IconButton(
                     onPressed: () {
-                      // 
-                      if (state.todos[index].isFavorite) {
-                        state.todos[index].isFavorite = false;
-                        context.read<HomePageBloc>().add(FavoriteTodo(isFavorite: state.todos[index].isFavorite));
-                        Navigator.of(context).pushNamed('/favoritePage', arguments: state.todos[index].isFavorite);
-                        Navigator.pop(context);
-                        // debugPrint('===${state.todos[index].isFavorite}');
-                      } else {
-                        state.todos[index].isFavorite = true;
-                        context.read<HomePageBloc>().add(FavoriteTodo(isFavorite: state.todos[index].isFavorite));
-                        Navigator.of(context).pushNamed('/favoritePage', arguments: state.todos[index].isFavorite);
-                        Navigator.pop(context);
-                        // debugPrint('===${state.todos[index].isFavorite}');
-                      }
+                      context.read<MainPageBloc>().add(BecomeFavoriteTodo(
+                            todo: state.todos[index],
+                            todos: state.favoriteTodos,
+                          ));
                     },
                     icon: state.todos[index].isFavorite ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
                   ),

@@ -1,7 +1,7 @@
 class Todo {
   final String id;
   final String title;
-  bool isFavorite;
+  bool isFavorite =  false;
   Todo({required this.id, required this.title, this.isFavorite=false});
   @override
   String toString() {

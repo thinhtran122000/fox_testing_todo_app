@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fox_testing_todo_app/home_page/bloc/home_page_bloc.dart';
+import 'package:fox_testing_todo_app/main_page/bloc/main_page_bloc.dart';
+
+
 import 'package:fox_testing_todo_app/models/todo_model.dart';
 
 class NewTodoPage extends StatefulWidget {
@@ -58,14 +60,14 @@ class _NewTodoPageState extends State<NewTodoPage> {
                 ),
               ),
             ),
-            BlocListener<HomePageBloc, HomePageState>(
+            BlocListener<MainPageBloc, MainPageState>(
               listener: (context, state) {
                 if (state is TodosLoaded) {}
               },
               child: ElevatedButton(
                 onPressed: () {
                   Todo todo = Todo(id: '1', title: textEditingController.text);
-                  context.read<HomePageBloc>().add(AddTodo(todo: todo));
+                  context.read<MainPageBloc>().add(AddTodo(todo: todo));
                   Navigator.pop(context);
                 },
                 child: const Text('Save'),
